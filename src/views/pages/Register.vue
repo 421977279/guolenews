@@ -108,9 +108,14 @@ export default {
       }).then(res => {
         console.log(res);
         const { message } = res.data;
+        const { id } = res.data.data;
+        // console.log(id);
+
         const status = res.status;
         if (message === "注册成功") {
           this.$toast.success(message);
+
+          // this.$router.push('/personal')
         } else {
           this.$toast.fail(message);
         }
@@ -123,6 +128,7 @@ export default {
 <style lang="less" scoped>
 .phoneTop {
   height: 7.222vw;
+  background-color: #6d8e97;
 }
 
 .login {

@@ -24,6 +24,36 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: () => import("@/views/pages/Register")
+    },
+    // 个人中心页
+    {
+        path: '/personal',
+        name: 'Personal',
+        component: () => import("@/views/pages/Personal")
+    },
+    // 我的关注页
+    {
+        path: '/follow',
+        name: 'Follow',
+        component: () => import("@/views/pages/Follow")
+    },
+    // 我的跟帖页
+    {
+        path: '/comments',
+        name: 'Comments',
+        component: () => import("@/views/pages/Comments")
+    },
+    // 我的收藏页
+    {
+        path: '/posts',
+        name: 'Posts',
+        component: () => import("@/views/pages/Posts")
+    },
+    // 设置页
+    {
+        path: '/set',
+        name: 'Set',
+        component: () => import("@/views/pages/Set")
     }
 ]
 

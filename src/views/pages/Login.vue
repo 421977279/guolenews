@@ -45,7 +45,7 @@ export default {
       username: "",
       password: "",
       ruleUsername: "^\\d{5,11}$",
-      rulePassword: "^\\w{3,11}$"
+      rulePassword: "^.{3,11}$"
     };
   },
   components: {
@@ -66,7 +66,9 @@ export default {
         return;
       }
 
-      if (!regExpUsername.test(this.password)) {
+      const regExpPassword = new RegExp(this.rulePassword);
+
+      if (!regExpPassword.test(this.password)) {
         this.$toast.fail("密码格式不正确");
         return;
       }
@@ -81,12 +83,19 @@ export default {
         }
       }).then(res => {
         console.log(res);
-        const { statusCode, message } = res.data;
+        const { message } = res.data;
         if (message == "登录成功") {
           this.$toast.success(message);
         } else {
           this.$toast.fail(message);
         }
+
+        const { token } = res.data.data;
+        const { id } = res.data.data.user; 
+        localStorage.setItem('userToken',token);
+        localStorage.setItem('userId',id);
+
+        this.$router.push('/personal')
       });
     },
     getUserName(username) {
@@ -102,6 +111,7 @@ export default {
 <style lang="less" scoped>
 .phoneTop {
   height: 7.222vw;
+  background-color: #6d8e97;
 }
 
 .login {
