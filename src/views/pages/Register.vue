@@ -17,7 +17,7 @@
       <InputBox
         textPlaceholder="用户名 / 手机号码"
         type="text"
-        rule="^\d{5,11}$"
+        :rule="ruleUsername"
         errMsg="请输入正确的手机号码"
         @valChange="getUserName"
       />
@@ -25,7 +25,7 @@
       <InputBox
         textPlaceholder="昵称"
         type="text"
-        rule="^\w{5,11}$"
+        :rule="ruleNickname"
         errMsg="请输入正确的昵称"
         @valChange="getNickName"
       />
@@ -33,7 +33,7 @@
       <InputBox
         textPlaceholder="密码"
         type="password"
-        rule="^.{3,9}$"
+        :rule="rulePassword"
         errMsg="请输入正确的密码"
         @valChange="getPassWord"
       />
@@ -53,7 +53,10 @@ export default {
     return {
       username: "",
       nickname: "",
-      password: ""
+      password: "",
+      ruleUsername: "^\\d{5,11}$",
+      ruleNickname: "^\\w{5,11}$",
+      rulePassword: "^.{3,9}$"
     };
   },
   components: {
@@ -71,8 +74,26 @@ export default {
       this.password = password;
     },
     sendRegister() {
-      if (!this.username || !this.nickname || this.password) {
-        this.$toast("请填写完整信息");
+      if (!this.username || !this.nickname || !this.password) {
+        this.$toast.fail("请填写完整信息");
+        return;
+      }
+
+      const regExpUsername = new RegExp(this.ruleUsername);
+      if (!regExpUsername.test(this.username)) {
+        this.$toast.fail("请填写正确的中国大陆地区手机号");
+        return;
+      }
+
+      const regExpNickname = new RegExp(this.ruleNickname);
+      if (!regExpNickname.test(this.nickname)) {
+        this.$toast.fail("昵称长度应为5～11个字符");
+        return;
+      }
+
+      const regExpPassword = new RegExp(this.rulePassword);
+      if (!regExpPassword.test(this.password)) {
+        this.$toast.fail("密码长度应为3～9个字符");
         return;
       }
 
@@ -88,8 +109,10 @@ export default {
         console.log(res);
         const { message } = res.data;
         const status = res.status;
-        if (status === 200) {
-          this.$toast(message);
+        if (message === "注册成功") {
+          this.$toast.success(message);
+        } else {
+          this.$toast.fail(message);
         }
       });
     }
