@@ -1,7 +1,8 @@
 <template>
   <div>
-      果乐头条主页
-      
+      <router-link to="/register">注册页</router-link>
+      <br>
+      <router-link to="/login">登录页</router-link>
   </div>
 </template>
 

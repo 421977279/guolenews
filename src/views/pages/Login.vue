@@ -16,7 +16,7 @@
       <!-- 输入框 -->
       <InputBox
         textPlaceholder="用户名 / 手机号码"
-        rule="^\d{5,11}$"
+        :rule="ruleUsername"
         type="text"
         errMsg="请输入正确的手机号码"
         @valChange="getUserName"
@@ -24,7 +24,7 @@
       <InputBox
         textPlaceholder="密码"
         type="password"
-        rule="^\w{5,11}$"
+        :rule="rulePassword"
         errMsg="请输入正确的密码"
         @valChange="getPassWord"
       />
@@ -42,8 +42,10 @@ import ButtonBox from "@/components/ButtonBox";
 export default {
   data() {
     return {
-      userName: "",
-      password: ""
+      username: "",
+      password: "",
+      ruleUsername: "^\\d{5,11}$",
+      rulePassword: "^\\w{3,11}$"
     };
   },
   components: {
@@ -52,24 +54,43 @@ export default {
   },
   methods: {
     sendLogin() {
+      if (!this.username || !this.password) {
+        this.$toast.fail("请填写完整的信息");
+        return;
+      }
+
+      const regExpUsername = new RegExp(this.ruleUsername);
+
+      if (!regExpUsername.test(this.username)) {
+        this.$toast.fail("手机号码格式不正确");
+        return;
+      }
+
+      if (!regExpUsername.test(this.password)) {
+        this.$toast.fail("密码格式不正确");
+        return;
+      }
+
       // console.log('子组件点击了登录');
       this.$axios({
         url: "http://localhost:3000/login",
         method: "post",
         data: {
-          userName: this.userName,
+          username: this.username,
           password: this.password
         }
       }).then(res => {
-        // console.log(res);
-        const {statusCode,message} = res.data;
-        if(statusCode===401){
-          this.$toast(message);
+        console.log(res);
+        const { statusCode, message } = res.data;
+        if (message == "登录成功") {
+          this.$toast.success(message);
+        } else {
+          this.$toast.fail(message);
         }
       });
     },
-    getUserName(userName) {
-      this.userName = userName;
+    getUserName(username) {
+      this.username = username;
     },
     getPassWord(password) {
       this.password = password;

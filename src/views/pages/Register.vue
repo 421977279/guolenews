@@ -71,6 +71,11 @@ export default {
       this.password = password;
     },
     sendRegister() {
+      if (!this.username || !this.nickname || this.password) {
+        this.$toast("请填写完整信息");
+        return;
+      }
+
       this.$axios({
         url: "http://localhost:3000/register",
         method: "post",
@@ -81,9 +86,9 @@ export default {
         }
       }).then(res => {
         console.log(res);
-        const {message}=res.data;
+        const { message } = res.data;
         const status = res.status;
-        if(status===200){
+        if (status === 200) {
           this.$toast(message);
         }
       });

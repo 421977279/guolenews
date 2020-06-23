@@ -4,8 +4,10 @@
     :class="{success:flag,error:!flag}"
     :type="type" 
     :placeholder="textPlaceholder"
-    v-model="inputValue">
-    <span class="errorMsg">{{msg}}</span>
+    v-model="inputValue"
+    @blur="showTips"
+    >
+    <!-- <span class="errorMsg">{{msg}}</span> -->
   </div>
 </template>
 
@@ -16,7 +18,7 @@ export default {
     return {
       inputValue:'',
       flag:true,
-      msg:''
+      // msg:''
     }
   },
   watch: {
@@ -29,13 +31,21 @@ export default {
       if(!this.flag){
         // console.log(this.errMsg);
         this.msg = this.errMsg;
-
-        this.$toast.fail(this.errMsg)
       }else{
         this.msg = ''
       }
-
       this.$emit('valChange',newValue)
+    }
+  },
+  methods: {
+    showTips(){
+      if(!this.inputValue===" "){
+        return;
+      } 
+
+      if(!this.flag){
+        this.$toast.fail(this.errMsg)
+      }
     }
   }
 };
@@ -51,10 +61,10 @@ input {
   height: 50px;
 }
 
-.errorMsg{
-  font-size: 12px;
-  color: red;
-}
+// .errorMsg{
+//   font-size: 12px;
+//   color: red;
+// }
 
 .success{
   border-bottom-color: #ccc;
