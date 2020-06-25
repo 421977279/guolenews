@@ -1,5 +1,4 @@
 <template>
-  <div>
     <!-- 个人中心页 -->
     <div class="personalPage" v-if="userInfo">
       <!-- 手机顶部 -->
@@ -35,7 +34,6 @@
 
       <NavBars name="退出" detail="注销用户" @click.native="handleClick" />
     </div>
-  </div>
 </template>
 
 <script>

@@ -117,7 +117,7 @@ export default {
         if (message === "注册成功") {
           this.$toast.success(message);
 
-          // this.$router.push('/personal')
+          this.$router.push('/login')
         } else {
           this.$toast.fail(message);
         }

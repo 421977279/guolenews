@@ -29,31 +29,46 @@ const routes = [
     {
         path: '/personal',
         name: 'Personal',
-        component: () => import("@/views/pages/Personal")
+        component: () => import("@/views/personal"),
+        meta: {
+            auth: true
+        }
     },
     // 我的关注页
     {
         path: '/follow',
         name: 'Follow',
-        component: () => import("@/views/pages/Follow")
+        component: () => import("@/views/personal/Follow"),
+        meta: {
+            auth: true
+        }
     },
     // 我的跟帖页
     {
         path: '/comments',
         name: 'Comments',
-        component: () => import("@/views/pages/Comments")
+        component: () => import("@/views/personal/Comments"),
+        meta: {
+            auth: true
+        }
     },
     // 我的收藏页
     {
         path: '/posts',
         name: 'Posts',
-        component: () => import("@/views/pages/Posts")
+        component: () => import("@/views/personal/Posts"),
+        meta: {
+            auth: true
+        }
     },
     // 设置页
     {
         path: '/set',
         name: 'Set',
-        component: () => import("@/views/pages/Set")
+        component: () => import("@/views/personal/Set"),
+        meta: {
+            auth: true
+        }
     }
 ]
 
