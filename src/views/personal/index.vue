@@ -21,7 +21,7 @@
           <div class="userName-bottom">{{(userInfo.create_date || " ").split('T')[0]}}</div>
         </div>
 
-        <div class="iconfont iconarrow"></div>
+        <div class="iconfont iconarrow" @click="goEidtPage"></div>
       </div>
 
       <!-- 导航条 -->
@@ -98,6 +98,9 @@ export default {
         .catch(() => {
           // on cancel
         });
+    },
+    goEidtPage(){
+      this.$router.push('/edit')
     }
   },
   components: {

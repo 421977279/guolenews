@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="path || '#'">
+    <router-link :to="path || ''">
       <div class="navBars">
         <div class="navBars-left">{{name}}</div>
         <div class="navBars-right">
@@ -28,6 +28,7 @@ export default {
   .navBars-left {
     flex: 1;
     color: #333;
+    font-weight: 700;
   }
 
   .navBars-right {

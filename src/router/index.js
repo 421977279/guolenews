@@ -69,6 +69,15 @@ const routes = [
         meta: {
             auth: true
         }
+    },
+    // 编辑页
+    {
+        path: '/edit',
+        name: 'Edit',
+        component: () => import("@/views/personal/Edit"),
+        meta: {
+            auth: true
+        }
     }
 ]
 
