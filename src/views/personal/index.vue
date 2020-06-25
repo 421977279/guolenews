@@ -8,7 +8,8 @@
 
       <!-- 用户资料头部 -->
       <div class="userInfo">
-        <img :src="$axios.defaults.baseURL+userInfo.head_img" alt class="avatar" />
+        <img v-if="userInfo.head_img" :src="$axios.defaults.baseURL+userInfo.head_img" alt class="avatar" />
+        <img v-else src="@/assets/logo.png" alt class="avatar" />
 
         <div class="userName">
           <div class="userName-top">
