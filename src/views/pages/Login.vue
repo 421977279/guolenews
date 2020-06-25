@@ -2,7 +2,9 @@
   <!-- 登录页 -->
   <div class="loginPage">
     <!-- 手机顶部 -->
-    <div class="phoneTop"></div>
+    <div class="phoneTop">
+      <img src="@/assets/phoneTop.jpg" alt class="img" />
+    </div>
 
     <div class="login">
       <!-- 返回按钮 -->
@@ -91,11 +93,11 @@ export default {
         }
 
         const { token } = res.data.data;
-        const { id } = res.data.data.user; 
-        localStorage.setItem('userToken',token);
-        localStorage.setItem('userId',id);
+        const { id } = res.data.data.user;
+        localStorage.setItem("userToken", token);
+        localStorage.setItem("userId", id);
 
-        this.$router.push('/personal')
+        this.$router.push("/personal");
       });
     },
     getUserName(username) {
@@ -110,8 +112,9 @@ export default {
 
 <style lang="less" scoped>
 .phoneTop {
-  height: 7.222vw;
-  background-color: #6d8e97;
+  .img {
+    width: 100%;
+  }
 }
 
 .login {

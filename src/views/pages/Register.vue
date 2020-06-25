@@ -2,7 +2,9 @@
   <!-- 注册页 -->
   <div class="registerPage">
     <!-- 手机顶部 -->
-    <div class="phoneTop"></div>
+    <div class="phoneTop">
+      <img src="@/assets/phoneTop.jpg" alt class="img" />
+    </div>
 
     <div class="login">
       <!-- 返回按钮 -->
@@ -127,8 +129,9 @@ export default {
 
 <style lang="less" scoped>
 .phoneTop {
-  height: 7.222vw;
-  background-color: #6d8e97;
+  .img {
+    width: 100%;
+  }
 }
 
 .login {

@@ -3,7 +3,9 @@
     <!-- 个人中心页 -->
     <div class="personalPage" v-if="userInfo">
       <!-- 手机顶部 -->
-      <div class="phoneTop"></div>
+      <div class="phoneTop">
+        <img src="@/assets/phoneTop.jpg" alt class="img" />
+      </div>
 
       <!-- 用户资料头部 -->
       <div class="userInfo">
@@ -85,13 +87,14 @@ export default {
   },
   methods: {
     handleClick() {
-      this.$dialog.confirm({
-        title: "你确定真的要退出吗？"
-      })
+      this.$dialog
+        .confirm({
+          title: "你确定真的要退出吗？"
+        })
         .then(() => {
-          localStorage.removeItem('userToken');  
-          localStorage.removeItem('userId');  
-          this.$router.replace('/login');
+          localStorage.removeItem("userToken");
+          localStorage.removeItem("userId");
+          this.$router.replace("/login");
         })
         .catch(() => {
           // on cancel
@@ -106,8 +109,9 @@ export default {
 
 <style lang="less" scoped>
 .phoneTop {
-  height: 7.222vw;
-  background-color: #6d8e97;
+  .img {
+    width: 100%;
+  }
 }
 
 .userInfo {
