@@ -15,6 +15,16 @@ Vue.prototype.$axios = axios;
 
 axios.defaults.baseURL = "http://localhost:3000";
 
+// 请求拦截器
+axios.interceptors.request.use(config=>{
+  
+  if(localStorage.getItem('userToken')&& !config.headers.Authorization){
+    config.headers.Authorization = "Bearer " + localStorage.getItem('userToken')
+  }
+
+  return config
+})
+
 // 路由守卫
 router.beforeEach((to, from, next) => {
   console.log(to);
@@ -43,7 +53,7 @@ axios.interceptors.response.use(res => {
     message
   } = res.data;
 
-  if (statusCode && statusCode === 401) {
+  if (message === "用户信息验证失败") {
     Toast.fail('用户信息校验失败，重新登录');
 
     localStorage.removeItem('userId');

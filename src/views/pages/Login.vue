@@ -88,16 +88,16 @@ export default {
         const { message } = res.data;
         if (message == "登录成功") {
           this.$toast.success(message);
+
+          const { token } = res.data.data;
+          const { id } = res.data.data.user;
+          localStorage.setItem("userToken", token);
+          localStorage.setItem("userId", id);
+
+          this.$router.push("/personal");
         } else {
           this.$toast.fail(message);
         }
-
-        const { token } = res.data.data;
-        const { id } = res.data.data.user;
-        localStorage.setItem("userToken", token);
-        localStorage.setItem("userId", id);
-
-        this.$router.push("/personal");
       });
     },
     getUserName(username) {

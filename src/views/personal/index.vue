@@ -63,7 +63,7 @@ export default {
         {
           name: "设置",
           detail: "基本设置",
-          path: "/set"
+          path: "/edit"
         }
       ]
     };

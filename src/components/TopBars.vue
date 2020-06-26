@@ -19,16 +19,16 @@ export default {
 <style lang="less" scoped>
 .topBars {
   display: flex;
-  padding-top: 10px;
+  padding-top: 2.778vw;
   .iconarrow---left {
-      padding-left: 20px;
+      padding-left: 5.556vw;
       font-weight: 700;
-      padding-top: 4px;
-      font-size: 14px;
+      padding-top: 1.111vw;
+      font-size: 3.889vw;
   }
 
   .topBarsName {
-      padding-left: 128px;
+      padding-left: 35.556vw;
       font-weight: 700;
   }
 }
