@@ -22,11 +22,15 @@
     <!-- 文章整体区域 -->
     <!-- tab栏 -->
     <van-tabs v-model="activeTab">
-      <van-tab v-for="topicList in topicLists" :key="topicList.id" :title="topicList.name"></van-tab>
+      <van-tab v-for="topicList in topicLists" :key="topicList.id" :title="topicList.name">
+        <!-- 文章具体内容页 -->
+        <post
+          :postList="postList"
+          v-for="postList in topicList.posts"
+          :key="postList.id"
+        />
+      </van-tab>
     </van-tabs>
-
-    <!-- 文章具体内容页 -->
-    <post :postList="postList" v-for="postList in postLists" :key="postList.id"/>
   </div>
 </template>
 
@@ -37,49 +41,60 @@ export default {
   data() {
     return {
       activeTab: 0,
-      topicLists: [],
-      postLists:[],
-      pageIndex:1,
-      pageSize:4
+      topicLists: []
     };
   },
 
   created() {
-    this.$axios({
-      url: "/category"
-    }).then(res => {
-      console.log('栏目列表结果',res);
+    this.getCategory();
+  },
 
-      this.topicLists = res.data.data;
+  computed: {
+    categoryId() {
+      const currentCategory = this.topicLists[this.activeTab];
 
-      this.loadPost();
-    });
-
+      return currentCategory.id;
+    }
   },
 
   watch: {
-    activeTab(){
+    activeTab() {
       this.loadPost();
     }
   },
 
   methods: {
+    getCategory() {
+      this.$axios({
+        url: "/category"
+      }).then(res => {
+        console.log("栏目列表结果", res);
+
+        const newData = res.data.data.map(topicList => {
+          return {
+            ...topicList,
+            posts: []
+          };
+        });
+
+        this.topicLists = newData;
+
+        console.log("新的栏目列表结果", this.topicLists);
+
+        this.loadPost();
+      });
+    },
+
     loadPost() {
-      const currentCategory = this.topicLists[this.activeTab]
-
-      const categoryId = currentCategory.id;
-
       this.$axios({
         url: "/post",
-        params:{
-          pageIndex:this.pageIndex,
-          pageSize:this.pageSize,
-          category:categoryId
+        params: {
+          category: this.categoryId
         }
       }).then(res => {
-        console.log('文章列表结果',res);
+        // console.log('文章列表结果',res);
 
-        this.postLists = res.data.data;
+        this.topicLists[this.activeTab].posts = res.data.data;
       });
     }
   },
