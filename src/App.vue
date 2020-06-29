@@ -6,7 +6,7 @@
 
 <style lang="less">
 // css 原生的写法
-@import url("//at.alicdn.com/t/font_1897402_rtuvjt32s48.css");
+@import url("//at.alicdn.com/t/font_1897402_13e9pw4ugkc.css");
 
 // 公共的样式
 *{
