@@ -61,15 +61,6 @@ const routes = [
             auth: true
         }
     },
-    // 设置页
-    {
-        path: '/set',
-        name: 'Set',
-        component: () => import("@/views/personal/Set"),
-        meta: {
-            auth: true
-        }
-    },
     // 编辑页
     {
         path: '/edit',
@@ -78,6 +69,12 @@ const routes = [
         meta: {
             auth: true
         }
+    },
+    // 测试页
+    {
+        path: '/test',
+        name: 'Test',
+        component: () => import("@/views/personal/Test")
     }
 ]
 
