@@ -23,12 +23,18 @@
     <!-- tab栏 -->
     <van-tabs v-model="activeTab">
       <van-tab v-for="topicList in topicLists" :key="topicList.id" :title="topicList.name">
-        <!-- 文章具体内容页 -->
-        <post
-          :postList="postList"
-          v-for="postList in topicList.posts"
-          :key="postList.id"
-        />
+
+        <van-list 
+          v-model="topicList.loading" 
+          :finished="topicList.finished" 
+          finished-text="没有更多了" 
+          @load="loadMorePost"
+          :immediate-check="false"
+        >
+          <!-- 文章具体内容页 -->
+          <post :postList="postList" v-for="postList in topicList.posts" :key="postList.id" />
+        </van-list>
+
       </van-tab>
     </van-tabs>
   </div>
@@ -59,7 +65,11 @@ export default {
 
   watch: {
     activeTab() {
-      this.loadPost();
+      const currentCategory = this.topicLists[this.activeTab];
+
+      if (currentCategory.posts.length === 0) {
+        this.loadPost();
+      }
     }
   },
 
@@ -73,7 +83,11 @@ export default {
         const newData = res.data.data.map(topicList => {
           return {
             ...topicList,
-            posts: []
+            posts: [],
+            pageIndex:1,
+            pageSize:4,
+            loading:false,
+            finished:false
           };
         });
 
@@ -86,16 +100,35 @@ export default {
     },
 
     loadPost() {
+      const currentCategory = this.topicLists[this.activeTab];
+
       this.$axios({
         url: "/post",
         params: {
+          pageIndex:currentCategory.pageIndex,
+          pageSize:currentCategory.pageSize,
           category: this.categoryId
         }
       }).then(res => {
         // console.log('文章列表结果',res);
 
-        this.topicLists[this.activeTab].posts = res.data.data;
+        // currentCategory.posts = res.data.data;
+        currentCategory.posts = [...currentCategory.posts,...res.data.data];
+
+        currentCategory.loading = false;
+
+        if(res.data.data.length<currentCategory.pageSize){
+          currentCategory.finished = true;
+        }
       });
+    },
+
+    loadMorePost(){
+      const currentCategory = this.topicLists[this.activeTab];
+
+      currentCategory.pageIndex += 1;
+
+      this.loadPost();
     }
   },
 
